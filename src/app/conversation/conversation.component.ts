@@ -13,6 +13,9 @@ export class ConversationComponent implements OnInit {
   friends: UserInterface[];
   friend: UserInterface
   date = Date.now()
+  showEmojiPicker: boolean = false
+  message: string = ""
+  messages = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -21,9 +24,35 @@ export class ConversationComponent implements OnInit {
     this.friendId = this.activatedRoute.snapshot.params.uid
     this.friends = userService.getFriends()
     this.friend = this.friends.find(x => x.uid == this.friendId)
+    this.messages = [ { 
+      from: 'him',
+      message: 'Hola'
+    },{
+      from: 'me',
+      message: 'Bien'
+    } ]
   }
 
   ngOnInit() {
   }
 
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event) {
+    const { message } = this;
+    const text = `${message}${event.emoji.native}`;
+
+    this.message = text;
+    this.showEmojiPicker = false;
+  }
+
+  sendMessage() {
+    this.messages.push({
+      from: 'me',
+      message: this.message
+    })
+    this.message = ''
+  }
 }

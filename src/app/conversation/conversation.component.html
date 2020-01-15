@@ -1,8 +1,58 @@
-<br><br><b>Fecha Actual del sistema {{ date|date:"d/m/yyyy"}}</b>
+<br /><br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="avatarFrameonline">
+                <img src="assets/img/generic_avatar.png" id="homeAvatarPicture">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="float-right">
+                <b>Fecha Actual del sistema {{ date|date:"d/m/yyyy"}}</b>
+            </div>
+            <h2><b>{{ friend.nick }}</b></h2>
+            <b>{{ friend.email }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 offset-md-3">
+            <main class="chat-window">
 
-<p>
-    {{ friend|json }}
-    <br>
-    <br>
-    <b>{{ friend.email }}</b>
-</p>
+                <ul>
+                    <ng-container *ngFor="let message of messages">
+                        <li class="him" *ngIf="message.from == 'him'">{{ message.message }}</li>
+                        <li class="me" *ngIf="message.from == 'me'">{{ message.message }}</li>      
+                    </ng-container>
+                </ul>
+                
+                <div class="panel-emoji">
+                    <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)"
+                        *ngIf="showEmojiPicker" title="Pick your emoji…"></emoji-mart>
+                </div>
+            </main>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="avatarFrameonline">
+                <img src="assets/img/generic_avatar.png" id="homeAvatarPicture">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea name="" class="form-control" id="" cols="30" rows="6" value="message" [(ngModel)]="message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="toggle-emoji btn btn btn-default" (click)="toggleEmojiPicker()">
+                            <i class="far fa-laugh-beam"></i>
+                        </button>
+                        <button class="btn btn-success" (click)="sendMessage()"> Enviar <i class="fas fa-paper-plane"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,10 +10,10 @@ export class UserService {
 
   constructor() {
     let myUser: UserInterface = {
-      nick: 'Andres',
+      nick: 'Andres Giraldo',
       subnick: 'Hola',
       age: 20,
-      email: 'asdasdasdasd',
+      email: 'andres.giraldo@gmail.com',
       friend: true,
       uid: 1
     }
