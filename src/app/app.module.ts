@@ -13,6 +13,12 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireStorageModule} from 'angularfire2/storage';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,12 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     AppRoutingModule,
     FormsModule,
     PickerModule,
-    EmojiModule
+    EmojiModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
