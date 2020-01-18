@@ -1,12 +1,12 @@
 <br /><br />
-<div class="container">
+<div class="container" [ngClass]="{ 'shaker': shake } ">
     <div class="row">
         <div class="col-md-3">
             <div class="avatarFrameonline">
                 <img src="assets/img/generic_avatar.png" id="homeAvatarPicture">
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" *ngIf="friend">
             <div class="float-right">
                 <b>Fecha Actual del sistema {{ date|date:"d/m/yyyy"}}</b>
             </div>
@@ -14,14 +14,20 @@
             <b>{{ friend.email }}</b>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="user">
         <div class="col-md-12 offset-md-3">
             <main class="chat-window">
 
                 <ul>
                     <ng-container *ngFor="let message of messages">
-                        <li class="him" *ngIf="message.from == 'him'">{{ message.message }}</li>
-                        <li class="me" *ngIf="message.from == 'me'">{{ message.message }}</li>      
+                        <li class="me" *ngIf="message.sender == user.uid && message.type == 'zumbido'">Ha enviado un zumbido </li>
+                        <li class="me" *ngIf="message.sender == user.uid && message.type == 'text'">
+                            {{ message.text }} <br> {{ message.timestamp|date:'medium' }}
+                        </li>
+                        <li class="him" *ngIf="message.sender != user.uid && message.type == 'text'">
+                            {{ message.text }} {{ message.receiver }}
+
+                        </li>      
                     </ng-container>
                 </ul>
                 
@@ -43,13 +49,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <textarea name="" class="form-control" id="" cols="30" rows="6" value="message" [(ngModel)]="message"></textarea>
+                        <textarea name="" (keyup.enter)="sendMessage()" class="form-control" id="" cols="30" rows="6" value="message" [(ngModel)]="message"></textarea>
                     </div>
                     <div class="form-group">
                         <button type="button" class="toggle-emoji btn btn btn-default" (click)="toggleEmojiPicker()">
                             <i class="far fa-laugh-beam"></i>
                         </button>
-                        <button class="btn btn-success" (click)="sendMessage()"> Enviar <i class="fas fa-paper-plane"></i> </button>
+                        <button class="btn btn-success mr-2" (click)="sendMessage()"> Enviar <i class="fas fa-paper-plane"></i> </button>
+                        <button class="btn btn-danger" (click)="sendZumbido()"> Zumbido <i class="fas fa-volume-up"></i> </button>
                     </div>
                 </div>
             </div>

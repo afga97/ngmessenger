@@ -18,7 +18,12 @@ import {AngularFireStorageModule} from 'angularfire2/storage';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { HttpClientModule } from '@angular/common/http';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { environment } from '../environments/environment';
+import { RequestComponent } from './modals/request/request.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +34,18 @@ import { environment } from '../environments/environment';
     ProfileComponent,
     MenuComponent,
     SearchPipe,
+    RequestComponent,
+    ContactComponent,
   ],
   imports: [
     NgbModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     PickerModule,
+    ImageCropperModule,
+    BootstrapModalModule.forRoot({container:document.body}),
     EmojiModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
@@ -44,6 +54,7 @@ import { environment } from '../environments/environment';
     AngularFireDatabaseModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [RequestComponent]
 })
 export class AppModule { }
